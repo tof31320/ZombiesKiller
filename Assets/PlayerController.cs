@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour {
     public Transform sphere;
 
     public float moveSpeed = 10f;
+    public float rotateSpeed = 100f;
 
     public float shootForce = 10f;
     public Transform shootingPoint; 
@@ -26,12 +27,14 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        _ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        /*_ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         if(Physics.Raycast(_ray, out hit, 1000f, 1 << LayerMask.NameToLayer("Ground"))){
             LookAt(new Vector3(hit.point.x, hit.point.y, hit.point.z));
             //print("LookAt..");
-        }
+        }*/
+       
+        transform.Rotate(transform.up, Input.GetAxis("Horizontal") * rotateSpeed * Time.deltaTime);
 
         transform.Translate(transform.forward * Time.deltaTime * Input.GetAxis("Vertical") * moveSpeed, Space.World);
 

@@ -19,7 +19,7 @@ public class CameraController : MonoBehaviour {
         // Early out if we don't have a target
         if (!target) return;
 
-        // Calculate the current rotation angles
+        /*// Calculate the current rotation angles
         float wantedRotationAngle = target.eulerAngles.y;
         float wantedHeight = target.position.y + height;
 
@@ -44,7 +44,9 @@ public class CameraController : MonoBehaviour {
         transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x + recul.x, currentHeight, transform.position.z + recul.z), 1f);
 
         // Always look at the target
-        //transform.LookAt(target);
+        //transform.LookAt(target);*/
+
+        transform.position = Vector3.Lerp(transform.position, target.position, 0.1f) + recul;
     }
 
 }
