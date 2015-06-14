@@ -4,7 +4,7 @@ using System.Collections;
 public class CameraController : MonoBehaviour {
 
     // The target we are following
-    public Transform target;
+    public Transform target; 
     // The distance in the x-z plane to the target
     public float distance = 10.0f;
     // the height we want the camera to be above the target
@@ -13,6 +13,11 @@ public class CameraController : MonoBehaviour {
     public float heightDamping = 2.0f;
     public float rotationDamping = 3.0f;
     public Vector3 recul = Vector3.zero;
+
+    void Awake()
+    {
+        target = GameObject.FindGameObjectWithTag("Player").transform;
+    }
 
     void LateUpdate()
     {
@@ -45,7 +50,7 @@ public class CameraController : MonoBehaviour {
 
         // Always look at the target
         //transform.LookAt(target);*/
-
+        
         transform.position = Vector3.Lerp(transform.position, target.position, 0.1f) + recul;
     }
 

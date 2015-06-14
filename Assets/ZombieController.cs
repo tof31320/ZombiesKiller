@@ -39,9 +39,23 @@ public class ZombieController : MonoBehaviour {
         }
 	}
 
-    void OnTriggerStay(Collider collision)
+    /*void OnTriggerStay(Collider collision)
     {
         if(collision.gameObject.CompareTag("Bullet")){
+            // Hit
+            Hit(collision.gameObject, collision.transform.position);
+        }
+        else if (collision.gameObject.CompareTag("Player")
+        && !dead)
+        {
+            BitePlayer(collision.gameObject.GetComponent<PlayerController>());
+        }
+    }*/
+
+    public void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Bullet"))
+        {
             // Hit
             Hit(collision.gameObject, collision.transform.position);
         }
@@ -54,7 +68,9 @@ public class ZombieController : MonoBehaviour {
 
     public void Hit(GameObject bullet, Vector3 hitPoint)
     {
-        // TODO Recul de l'impact        
+        // TODO Recul de l'impact  
+        rb.AddForce((transform.position - bullet.transform.position).normalized * 10f, ForceMode.Impulse);
+
         if(!dead){
             life -= hitDamage;
 
@@ -62,8 +78,7 @@ public class ZombieController : MonoBehaviour {
                 life = 0f;
                 Die();
             }    
-        }
-        Destroy(bullet);
+        }        
     }
 
     public void Die()
@@ -71,11 +86,18 @@ public class ZombieController : MonoBehaviour {
         dead = true;
         //_animator.SetBool("dead", true);
         //GetComponent<CapsuleCollider>().enabled = false;
-        GetComponent<MeshRenderer>().material.color = Color.black;
-        rb.velocity = Vector3.zero;
+        //GetComponent<MeshRenderer>().material.color = Color.black;
+        MeshRenderer[] renderer = GetComponentsInChildren<MeshRenderer>();
+        for (int i = 0; i < renderer.Length; i++)
+        {
+            renderer[i].material.color = Color.black;
+        }
+        
+        //rb.AddForce(transform.up * 12f, ForceMode.Impulse);
+        //rb.velocity = Vector3.zero;
         agent.speed = 0f;
         Destroy(gameObject, 10f);
-    }
+    } 
 
     public void BitePlayer(PlayerController player)
     {
@@ -84,7 +106,7 @@ public class ZombieController : MonoBehaviour {
         }
         if(Time.time - lastBiteTime > bitingTimeInterval){
 
-            player.Bite(this);
+            //player.Bite(this);
 
             lastBiteTime = Time.time;
         }

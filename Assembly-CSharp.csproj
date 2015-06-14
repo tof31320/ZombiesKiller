@@ -46,11 +46,15 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\AIController.cs" />
+     <Compile Include="Assets\BulletModel.cs" />
      <Compile Include="Assets\CameraController.cs" />
+     <Compile Include="Assets\DestroyOnCollision.cs" />
      <Compile Include="Assets\GameController.cs" />
      <Compile Include="Assets\PlayerController.cs" />
      <Compile Include="Assets\SimpleAgent.cs" />
      <Compile Include="Assets\SpawnZombie.cs" />
+     <Compile Include="Assets\TankController.cs" />
      <Compile Include="Assets\UIHUDController.cs" />
      <Compile Include="Assets\ZombieController.cs" />
  <Reference Include="UnityEngine.UI">

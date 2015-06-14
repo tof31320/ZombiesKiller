@@ -11,6 +11,9 @@ public class SpawnZombie : MonoBehaviour {
 
     public float spawnInterval = 5f;
 
+    public int nbZombiesToSpawn = 10;
+    private int _nbZombiesSpawn = 0;
+
 	// Update is called once per frame
 	void Start () {
         StartCoroutine("SpawnANewZombie");
@@ -18,8 +21,10 @@ public class SpawnZombie : MonoBehaviour {
 
     IEnumerator SpawnANewZombie()
     {
-        while(spawning){
-            GameObject zombie = Instantiate(zombiePrefab, transform.position, Quaternion.identity) as GameObject;            
+        while(_nbZombiesSpawn < nbZombiesToSpawn){
+            GameObject zombie = Instantiate(zombiePrefab, transform.position, Quaternion.identity) as GameObject;
+
+            _nbZombiesSpawn++;
 
             yield return new WaitForSeconds(spawnInterval);
         }

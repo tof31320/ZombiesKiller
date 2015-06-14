@@ -15,7 +15,7 @@ public class UIHUDController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        txtHealth.text = playerController.healh + "%";
+       /* txtHealth.text = playerController.healh + "%";
         if(playerController.healh < 50f){
             txtHealth.color = warningHealthColor;
         }else if(playerController.healh < 10f){
@@ -35,6 +35,6 @@ public class UIHUDController : MonoBehaviour {
         else
         {
             txtAmmo.color = Color.white;
-        }
+        }*/
 	}
 }
