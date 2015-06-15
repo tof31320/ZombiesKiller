@@ -3,7 +3,7 @@ using System.Collections;
 
 public class TankController : MonoBehaviour {
     
-    public Rigidbody rb;
+    //public Rigidbody rb;
 
     public float moveSpeed = 10f;
     public float rotateSpeed = 100f;
@@ -18,6 +18,8 @@ public class TankController : MonoBehaviour {
 
     public ParticleSystem psShoot;
     private RaycastHit _hit;
+
+    public Vector3 forward = Vector3.zero;
 
     public Color startColor = Color.white;
     private Color _color = Color.white;
@@ -38,17 +40,19 @@ public class TankController : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {        
-        rb = GetComponent<Rigidbody>();
+        //rb = GetComponent<Rigidbody>();
         tourelle = transform.FindChild("Tourelle");
         color = startColor;
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 	
         if(life <= 0f && !dead){
             DestroyTank();
         }
+
+        //transform.forward = new Vector3(transform.forward.x, 0f, transform.forward.z);       
 	}
 
     public void LookAt(Vector3 position)
@@ -78,10 +82,15 @@ public class TankController : MonoBehaviour {
         Destroy(gameObject, 10f);
     }
 
+    public void OnCollisionEnter(Collision collision)
+    {
+        //rb.velocity = Vector3.zero;
+    }
+
     public void OnCollisionWithBullet(BulletModel bullet, Vector3 hitpoint)
     {
         // Recul de l'impact
-        rb.AddForce((transform.position - bullet.transform.position).normalized * 10f, ForceMode.Impulse);
+        //rb.AddForce((transform.position - bullet.transform.position).normalized * 10f, ForceMode.Impulse);
 
         if(!dead){
             life = Mathf.Clamp(life - bullet.damageValue, 0f, 1f);
