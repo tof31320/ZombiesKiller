@@ -29,7 +29,13 @@ public class PlayerController : MonoBehaviour {
         }
 	}
 
-    /*public void Bite(AIController zombie)
+    public void OnCollisionWithBullet(BulletModel bullet)
+    {
+
+    }
+
+    /*
+    public void Bite(AIController zombie)
     {
         GameController.instance.OnPlayerHit();
 
@@ -40,8 +46,9 @@ public class PlayerController : MonoBehaviour {
         if(healh <= 0f){
             Die();
         }
-    }
+    }*/
 
+    /*
     public void Die()
     {
         // Game Over !

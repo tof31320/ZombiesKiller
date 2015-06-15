@@ -85,6 +85,14 @@ public class TankController : MonoBehaviour {
     public void OnCollisionEnter(Collision collision)
     {
         //rb.velocity = Vector3.zero;
+
+        if(collision.gameObject.CompareTag("Bullet"))
+        {
+            OnCollisionWithBullet(collision.gameObject.GetComponent<BulletModel>(), collision.contacts[0].point);
+
+        }else if(collision.gameObject.CompareTag("Zombie")){
+            OnCollisionWithTank(collision.gameObject.GetComponent<TankController>());
+        }
     }
 
     public void OnCollisionWithBullet(BulletModel bullet, Vector3 hitpoint)
@@ -94,6 +102,14 @@ public class TankController : MonoBehaviour {
 
         if(!dead){
             life = Mathf.Clamp(life - bullet.damageValue, 0f, 1f);
+
+            if(GetComponent<PlayerController>() != null){
+                // S'il s'agit d'un joueur on marque l'écran
+                GameController.instance.OnPlayerHit();
+
+                // recul de la morsure
+                GetComponent<Rigidbody>().AddForce((transform.position - bullet.transform.position).normalized * 25f, ForceMode.Impulse);
+            }
         }
     }
 
