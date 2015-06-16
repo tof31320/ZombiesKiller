@@ -6,7 +6,7 @@ public class GameController : MonoBehaviour {
     public GameObject ui;
     public RectTransform bloodPanel;
     public RectTransform goPanel;
-    public PlayerController playerController;
+    public PlayerTankController playerController;
 
     private static GameController _instance;
 
@@ -23,7 +23,7 @@ public class GameController : MonoBehaviour {
 	void Start () {
         ui.SetActive(true);
 
-        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerTankController>();
 	}
 
     public void Update()

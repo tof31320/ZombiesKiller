@@ -11,21 +11,26 @@ public class UIHUDController : MonoBehaviour {
     public Text txtHealth;
     public Text txtAmmo;
 
-    public PlayerController playerController;
+    public PlayerTankController playerController;
+
+    void Awake()
+    {
+        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerTankController>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
-       /* txtHealth.text = playerController.healh + "%";
-        if(playerController.healh < 50f){
+       txtHealth.text = Mathf.RoundToInt(playerController.life * 100f) + "%";
+        if(playerController.life < 0.5f){
             txtHealth.color = warningHealthColor;
-        }else if(playerController.healh < 10f){
+        }else if(playerController.life < 0.1f){
             txtHealth.color = alertHealthColor;
         }
         else
         {
             txtHealth.color = goodHealthColor;
         }
-
+        /*
         txtAmmo.text = playerController.bulletsInChargeur + " / " + playerController.nbChargeurs;
         if (playerController.bulletsInChargeur == 0
         || playerController.nbChargeurs < 2)

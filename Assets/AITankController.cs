@@ -1,25 +1,27 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class AIController : MonoBehaviour {
+public class AITankController : TankController {
 
-    public NavMeshAgent agent;
-    public TankController tank;
+    public NavMeshAgent agent;    
     public Transform player;
 
+    // Paramètres de shoot
+    private float lastShootTime = 0f;
+    public float shootInterval = 1f;
+
 	// Use this for initialization
-	void Start () {
-        tank = GetComponent<TankController>();
+	void Start () {        
         agent = GetComponent<NavMeshAgent>();
-        agent.speed = tank.moveSpeed;
+        agent.speed = moveSpeed;
         
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        player = GameObject.FindGameObjectWithTag("Player").transform.FindChild("Tourelle");
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
-        if (!tank.dead)
+        if (!dead)
         {
             /*if(Time.time - lastShootTime > 0.5f){
                 Shoot();
@@ -29,10 +31,24 @@ public class AIController : MonoBehaviour {
             agent.SetDestination(player.position);
             //transform.LookAt(player);
 
-            tank.LookAt(player.position);
+            LookAt(player.position);
+
+            if(Time.time - lastShootTime > shootInterval){
+                Shoot();
+                lastShootTime = Time.time;
+            }
         }
 	}
-    
+
+    public override void Dead()
+    {
+        base.Dead();
+        agent.speed = 0f;
+        color = Color.black;
+
+        Destroy(gameObject, 3f);
+    }
+
     /*public void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Bullet"))

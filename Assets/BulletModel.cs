@@ -3,7 +3,7 @@ using System.Collections;
 
 public class BulletModel : MonoBehaviour {
 
-    public float damageValue = 0.5f;
+    public float damageValue = 0.1f;
 
 	// Use this for initialization
 	void Start () {

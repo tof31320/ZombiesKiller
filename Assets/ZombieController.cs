@@ -62,7 +62,7 @@ public class ZombieController : MonoBehaviour {
         else if (collision.gameObject.CompareTag("Player")
         && !dead)
         {
-            BitePlayer(collision.gameObject.GetComponent<PlayerController>());
+            BitePlayer(collision.gameObject.GetComponent<PlayerTankController>());
         }
     }
 
@@ -99,7 +99,7 @@ public class ZombieController : MonoBehaviour {
         Destroy(gameObject, 10f);
     } 
 
-    public void BitePlayer(PlayerController player)
+    public void BitePlayer(PlayerTankController player)
     {
         if(player == null){
             return;

@@ -49,7 +49,7 @@ public class TankController : MonoBehaviour {
 	void FixedUpdate () {
 	
         if(life <= 0f && !dead){
-            DestroyTank();
+            Dead();
         }
 
         //transform.forward = new Vector3(transform.forward.x, 0f, transform.forward.z);       
@@ -73,19 +73,17 @@ public class TankController : MonoBehaviour {
         Destroy(bullet, 5f);
     }
 
-    public void DestroyTank()
+    public virtual void Dead()
     {
-        dead = true;
-
-        color = Color.black;
-
-        Destroy(gameObject, 10f);
+        dead = true;        
     }
 
     public void OnCollisionEnter(Collision collision)
     {
         //rb.velocity = Vector3.zero;
-
+        if(dead){
+            return;
+        }
         if(collision.gameObject.CompareTag("Bullet"))
         {
             OnCollisionWithBullet(collision.gameObject.GetComponent<BulletModel>(), collision.contacts[0].point);
@@ -97,20 +95,11 @@ public class TankController : MonoBehaviour {
 
     public void OnCollisionWithBullet(BulletModel bullet, Vector3 hitpoint)
     {
-        // Recul de l'impact
-        //rb.AddForce((transform.position - bullet.transform.position).normalized * 10f, ForceMode.Impulse);
+        // Recul de l'impact        
+        life = Mathf.Clamp(life - bullet.damageValue, 0f, 1f);
 
-        if(!dead){
-            life = Mathf.Clamp(life - bullet.damageValue, 0f, 1f);
-
-            if(GetComponent<PlayerController>() != null){
-                // S'il s'agit d'un joueur on marque l'écran
-                GameController.instance.OnPlayerHit();
-
-                // recul de la morsure
-                GetComponent<Rigidbody>().AddForce((transform.position - bullet.transform.position).normalized * 25f, ForceMode.Impulse);
-            }
-        }
+        // recul de la morsure
+        GetComponent<Rigidbody>().AddForce((transform.position - bullet.transform.position).normalized * 25f, ForceMode.Impulse);        
     }
 
     public void OnCollisionWithTank(TankController other)
