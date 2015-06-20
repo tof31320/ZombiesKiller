@@ -93,13 +93,15 @@ public class TankController : MonoBehaviour {
         }
     }
 
-    public void OnCollisionWithBullet(BulletModel bullet, Vector3 hitpoint)
+    public virtual void OnCollisionWithBullet(BulletModel bullet, Vector3 hitpoint)
     {
         // Recul de l'impact        
         life = Mathf.Clamp(life - bullet.damageValue, 0f, 1f);
 
         // recul de la morsure
-        GetComponent<Rigidbody>().AddForce((transform.position - bullet.transform.position).normalized * 25f, ForceMode.Impulse);        
+        GetComponent<Rigidbody>().AddForce((hitpoint- transform.position).normalized * 25f, ForceMode.Impulse);
+
+        print("Collision Bullet: " + gameObject.name);
     }
 
     public void OnCollisionWithTank(TankController other)

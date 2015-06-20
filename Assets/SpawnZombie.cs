@@ -24,7 +24,7 @@ public class SpawnZombie : MonoBehaviour {
         while(_nbZombiesSpawn < nbZombiesToSpawn){
             GameObject zombie = Instantiate(zombiePrefab, transform.position, Quaternion.identity) as GameObject;
 
-            _nbZombiesSpawn++;
+            _nbZombiesSpawn++;            
 
             yield return new WaitForSeconds(spawnInterval);
         }

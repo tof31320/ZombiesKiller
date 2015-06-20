@@ -19,26 +19,40 @@ public class AITankController : TankController {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void LateUpdate () {
+
+        if (GameController.instance.gameOver)
+        {
+            return;
+        }
 
         if (!dead)
-        {
-            /*if(Time.time - lastShootTime > 0.5f){
-                Shoot();
-                lastShootTime = Time.time;
-            }*/
-
+        {           
             agent.SetDestination(player.position);
             //transform.LookAt(player);
 
             LookAt(player.position);
 
-            if(Time.time - lastShootTime > shootInterval){
+            if(Time.time - lastShootTime > shootInterval
+            && PlayerAimed()){
                 Shoot();
                 lastShootTime = Time.time;
             }
         }
 	}
+
+    public bool PlayerAimed()
+    {
+        Ray ray = new Ray(shootingPoint.position, (player.position - shootingPoint.position).normalized);
+        RaycastHit hit;
+        if(Physics.Raycast(ray, out hit)){
+
+            if(hit.collider.gameObject.CompareTag("Player")){
+                return true;
+            }
+        }
+        return false;
+    }
 
     public override void Dead()
     {

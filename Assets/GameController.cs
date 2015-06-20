@@ -6,9 +6,12 @@ public class GameController : MonoBehaviour {
     public GameObject ui;
     public RectTransform bloodPanel;
     public RectTransform goPanel;
+    public RectTransform gameOverPanel;
     public PlayerTankController playerController;
 
     private static GameController _instance;
+
+    public bool gameOver = false;
 
     public static GameController instance {
         get {
@@ -23,14 +26,17 @@ public class GameController : MonoBehaviour {
 	void Start () {
         ui.SetActive(true);
 
+        gameOverPanel = ui.transform.FindChild("GameOverPanel").GetComponent<RectTransform>();
+
         playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerTankController>();
 	}
 
     public void Update()
-    {
+    {        
         if(Input.GetKey(KeyCode.Escape)){
-            Application.Quit();
+            Quitter();
         }
+
 
         /*if(playerController.healh <= 0){
             GameOver();
@@ -45,8 +51,20 @@ public class GameController : MonoBehaviour {
         print("Impact");
     }
 
+    public void Rejouer()
+    {
+        Application.LoadLevel(Application.loadedLevel);
+    }
+
     public void GameOver()
     {
-        
+        gameOver = true;
+
+        gameOverPanel.gameObject.SetActive(true);
+    }
+
+    public void Quitter()
+    {
+        Application.Quit();
     }
 }

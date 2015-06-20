@@ -13,6 +13,10 @@ public class PlayerTankController : TankController {
 	// Update is called once per frame
     void Update()
     {
+        if(GameController.instance.gameOver){
+            return;
+        }
+
         _ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         if (Physics.Raycast(_ray, out hit, 1000f, 1 << LayerMask.NameToLayer("Ground")))
@@ -27,7 +31,21 @@ public class PlayerTankController : TankController {
         {
             Shoot();
         }
-    }    
+    }
+
+    public override void OnCollisionWithBullet(BulletModel bullet, Vector3 hitpoint)
+    {
+        base.OnCollisionWithBullet(bullet, hitpoint);
+
+        GameController.instance.OnPlayerHit();
+    }
+
+    public override void Dead()
+    {
+        base.Dead();
+
+        GameController.instance.GameOver();
+    }
 
     /*
     public void Bite(AIController zombie)
